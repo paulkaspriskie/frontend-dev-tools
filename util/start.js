@@ -33,7 +33,7 @@ app.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, o
  */
 function compileJs() {
   browserify({ debug: true })
-    .transform(babelify)
+    .transform(babelify, {presets:["env"]})
     .require("./app/src/js/app.js", { entry: true })
     .bundle()
     .on("error", function (err) { console.log("Error: " + err.message); })
@@ -45,7 +45,7 @@ var esWatcher = chokidar.watch('./app/src/js', {ignored: /^\./, persistent: true
 var bundleWatcher = chokidar.watch('./public/js', {ignored: /^\./, persistent: true});
 
 esWatcher
-  .on('ready', () => { console.info('\x1b[36m','Bundling JS...'); })
+  .on('ready', function() { console.info('\x1b[36m','Bundling JS...'); })
   .on('change', function(path) { console.info('\x1b[36m','Bundling JS...'); compileJs(); })
   .on('error', function(error) { console.error('Error happened', error); });
 
