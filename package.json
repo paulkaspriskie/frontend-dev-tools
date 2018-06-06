@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node config/start.js"
+    "start": "node util/start.js"
   },
   "author": "paulkaspriskie",
   "license": "ISC",
