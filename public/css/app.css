@@ -1,3 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");body,html{font-family:'Open Sans', sans-serif}
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");body,html{margin:0;padding:0;font-family:'Open Sans', sans-serif}#app{display:flex;padding:1.5em 3em 0 3em}#app>h1{margin:0;font-size:18pt;font-weight:normal}
 
 /*# sourceMappingURL=app.css.map */

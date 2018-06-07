@@ -8,7 +8,6 @@ var sass = require('node-sass');
 var Watcher = require('node-sass-watcher');
 
 
-
 /**
  * Express Dev server:
  * serves public directory to port 3000
@@ -23,13 +22,12 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(publicDir, 'index.html'))
 });
 
-app.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'))
-
+app.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'));
 
 
 /**
- * Node-sass compiler/watcher:
- * compiles scss files to css and watches scss files for changes
+ * ECMA script compiler/watcher:
+ * compiles ECMA script to browser readable javascript.
  */
 function compileJs() {
   browserify({ debug: true })
@@ -47,12 +45,11 @@ var bundleWatcher = chokidar.watch('./public/js', {ignored: /^\./, persistent: t
 esWatcher
   .on('ready', function() { console.info('\x1b[36m','Bundling JS...'); })
   .on('change', function(path) { console.info('\x1b[36m','Bundling JS...'); compileJs(); })
-  .on('error', function(error) { console.error('Error happened', error); });
+  .on('error', function(error) { console.error('Error:', error); });
 
 bundleWatcher
   .on('change', function(path) { console.info('\x1b[32m','💾  JS written to file! ' + path); })
-  .on('error', function(error) { console.error('Error happened', error); });
-
+  .on('error', function(error) { console.error('Error:', error); });
 
 
 /**
