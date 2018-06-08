@@ -43,13 +43,13 @@ var esWatcher = chokidar.watch('./app/src/js', {ignored: /^\./, persistent: true
 var bundleWatcher = chokidar.watch('./public/js', {ignored: /^\./, persistent: true});
 
 esWatcher
-  .on('ready', function() { console.info('\x1b[36m','Bundling JS...'); })
-  .on('change', function(path) { console.info('\x1b[36m','Bundling JS...'); compileJs(); })
-  .on('error', function(error) { console.error('Error:', error); });
+  .on('ready', () => console.info('\x1b[36m','Bundling JS...'))
+  .on('change', path => { console.info('\x1b[36m','Bundling JS...'); compileJs(); })
+  .on('error', error => console.error('Error:', error));
 
 bundleWatcher
-  .on('change', function(path) { console.info('\x1b[32m','💾  JS written to file! ' + path); })
-  .on('error', function(error) { console.error('Error:', error); });
+  .on('change', path => console.info('\x1b[32m','💾  JS written to file! ' + path))
+  .on('error', error => console.error('Error:', error));
 
 
 /**
