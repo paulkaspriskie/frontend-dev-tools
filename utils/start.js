@@ -39,8 +39,8 @@ function compileJs() {
 }
 
 compileJs();
-var esWatcher = chokidar.watch('./app/src/js', {ignored: /^\./, persistent: true});
-var bundleWatcher = chokidar.watch('./public/js', {ignored: /^\./, persistent: true});
+var esWatcher = chokidar.watch('./app/src/js', {ignored: /^\./, persistent: true, awaitWriteFinish: true});
+var bundleWatcher = chokidar.watch('./public/js', {ignored: /^\./, persistent: true, awaitWriteFinish: true});
 
 esWatcher
   .on('ready', () => console.info('\x1b[36m','Bundling JS...'))

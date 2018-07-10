@@ -4,3 +4,4 @@
 # ignore node modules and debug files
 node_modules/
 npm-debug.log
+package-lock.json
