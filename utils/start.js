@@ -1,11 +1,12 @@
 var path = require('path');
-var fs = require('fs');
+var fs = require("graceful-fs");
 var chokidar = require('chokidar');
 var express = require('express');
 var browserify = require("browserify");
 var babelify = require("babelify");
 var sass = require('node-sass');
 var Watcher = require('node-sass-watcher');
+
 
 
 /**
@@ -25,32 +26,6 @@ app.get('/', function (req, res) {
 app.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'));
 
 
-/**
- * ECMA script compiler/watcher:
- * compiles ECMA script to browser readable javascript.
- */
-function compileJs() {
-  browserify({ debug: true })
-    .transform(babelify, {presets:["env"]})
-    .require("./app/src/js/app.js", { entry: true })
-    .bundle()
-    .on("error", function (err) { console.log("Error: " + err.message); })
-    .pipe(fs.createWriteStream("./public/js/bundle.js"));
-}
-
-compileJs();
-var esWatcher = chokidar.watch('./app/src/js', {ignored: /^\./, persistent: true, awaitWriteFinish: true});
-var bundleWatcher = chokidar.watch('./public/js', {ignored: /^\./, persistent: true, awaitWriteFinish: true});
-
-esWatcher
-  .on('ready', () => console.info('\x1b[36m','Bundling JS...'))
-  .on('change', path => { console.info('\x1b[36m','Bundling JS...'); compileJs(); })
-  .on('error', error => console.error('Error:', error));
-
-bundleWatcher
-  .on('change', path => console.info('\x1b[32m','💾  JS written to file! ' + path))
-  .on('error', error => console.error('Error:', error));
-
 
 /**
  * Node-sass compiler/watcher:
@@ -59,7 +34,7 @@ bundleWatcher
 function render() {
   console.info('\x1b[36m','Rendering sass...');
   sass.render({
-    file: './app/src/scss/app.scss',
+    file: './src/scss/app.scss',
     outFile: './public/css/app.css',
     outputStyle: 'compressed',
     sourceMap: true
@@ -67,14 +42,45 @@ function render() {
   function(error, result) {
     if (!error) {
       fs.writeFile('./public/css/app.css', result.css, function(err){
-        if (!err) { console.info('\x1b[32m','💾  CSS written to file!'); }
+        if (!err) { console.info('\x1b[32m','CSS written to file!'); }
       });
+    } else {
+      console.log(error);
     }
   });
 }
 
-// watches sass
-var scssWatcher = new Watcher('./app/src/scss/app.scss');
+var scssWatcher = new Watcher('./src/scss/app.scss');
 scssWatcher.on('init', render);
 scssWatcher.on('update', render);
 scssWatcher.run();
+
+
+
+/**
+ * ECMA script compiler/watcher:
+ * Uses browserify/babelify to compile ecma script 6 to browser readable js.
+ */
+const appJs = chokidar.watch('./src/js/app.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
+const bundleJs = chokidar.watch('./public/js/bundle.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
+
+function compileJs() {
+  browserify({ debug: true })
+    .require("./src/js/app.js", { entry: true })
+    .transform(babelify, { presets: ["env"] })
+    .transform('uglifyify', { sourceMap: false })
+    .bundle()
+    .on("error", function (err) { console.log("Error: " + err.message); })
+    .pipe(fs.createWriteStream("./public/js/bundle.js"));
+}
+
+appJs.on('change', (path, stats) => {
+  console.info('\x1b[36m','JS file changed, bundling js...');
+  compileJs();
+});
+
+bundleJs.on('change', (path, stats) => {
+  console.info('\x1b[32m',`JS written to file: ${path}`);
+});
+
+compileJs();

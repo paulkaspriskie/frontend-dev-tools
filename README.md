@@ -1,4 +1,4 @@
-# PK-ECMA-Sandbox
+# ECMA-Script-SDK
  *A quick start environment for rapid prototyping ECMA script web apps.* :pizza:
 
 ## What's in the box?

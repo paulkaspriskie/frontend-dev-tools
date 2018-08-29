@@ -1,23 +1,25 @@
 {
-  "name": "pk-prototype-sdk-web",
+  "name": "data-vsualization-sandbox",
   "version": "1.0.0",
   "description": "",
-  "main": "app/src/js/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "node utils/start.js"
   },
-  "author": "paulkaspriskie",
+  "transform": [["babelify", { "comments": false } ]],
+  "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babelify": "^8.0.0",
     "browserify": "^16.2.2",
-    "chokidar": "^2.0.3",
+    "chokidar": "^2.0.4",
     "express": "^4.16.3",
-    "node-sass": "^4.9.0",
+    "graceful-chokidar": "^0.1.0",
+    "node-sass": "^4.9.3",
     "node-sass-watcher": "^0.5.1",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "opn": "^5.3.0",
+    "uglifyify": "^5.0.1"
   }
 }
