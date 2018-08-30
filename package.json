@@ -1,5 +1,5 @@
 {
-  "name": "data-vsualization-sandbox",
+  "name": "ECMA-Script-SDK",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "start": "node utils/start.js"
   },
   "transform": [["babelify", { "comments": false } ]],
-  "author": "",
+  "author": "paul kaspriskie",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -20,6 +20,8 @@
     "node-sass": "^4.9.3",
     "node-sass-watcher": "^0.5.1",
     "opn": "^5.3.0",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
     "uglifyify": "^5.0.1"
   }
 }

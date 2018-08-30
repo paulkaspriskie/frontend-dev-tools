@@ -6,24 +6,44 @@ var browserify = require("browserify");
 var babelify = require("babelify");
 var sass = require('node-sass');
 var Watcher = require('node-sass-watcher');
+var opn = require('opn');
 
 
 
 /**
  * Express Dev server:
+ * Implements reloading dev server
  * serves public directory to port 3000
  */
 var app = express();
+var http = require('http').Server(app);
 var publicDir = path.join(__dirname, './../public');
 
-app.use(express.static(publicDir));
-app.set('port', process.env.PORT || 3000);
+app.get([/\/$/, /.*\.html$/], function (req, res) {
+  var filename = publicDir + req.path;
+      filename += filename.endsWith('/') ? 'index.html' : '';
 
-app.get('/', function (req, res) {
-  res.sendFile(path.join(publicDir, 'index.html'))
+  fs.readFile(filename, function (_, data) {
+    res.send(data
+    + '<script src="/socket.io/socket.io.js"></script>'
+    + '<script>'
+    + '  var socket = io();'
+    + '  socket.on("file-change-event", function () {'
+    + '    window.location.reload();'
+    + '  });'
+    + '</script>'
+    );
+  });
 });
 
-app.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'));
+app.use(express.static(publicDir));
+http.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'));
+opn('http://localhost:3000');
+
+var io = require('socket.io')(http);
+fs.watch(publicDir, { recursive:true }, function() {
+  io.emit('file-change-event');
+});
 
 
 
@@ -82,5 +102,3 @@ appJs.on('change', (path, stats) => {
 bundleJs.on('change', (path, stats) => {
   console.info('\x1b[32m',`JS written to file: ${path}`);
 });
-
-compileJs();
