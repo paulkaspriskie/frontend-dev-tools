@@ -19,31 +19,35 @@ var app = express();
 var http = require('http').Server(app);
 var publicDir = path.join(__dirname, './../public');
 
-app.get([/\/$/, /.*\.html$/], function (req, res) {
-  var filename = publicDir + req.path;
-      filename += filename.endsWith('/') ? 'index.html' : '';
+if (app.get('env') === 'development') {
 
-  fs.readFile(filename, function (_, data) {
-    res.send(data
-    + '<script src="/socket.io/socket.io.js"></script>'
-    + '<script>'
-    + '  var socket = io();'
-    + '  socket.on("file-change-event", function () {'
-    + '    window.location.reload();'
-    + '  });'
-    + '</script>'
-    );
+  app.get([/\/$/, /.*\.html$/], function (req, res) {
+    var filename = publicDir + req.path;
+        filename += filename.endsWith('/') ? 'index.html' : '';
+
+    fs.readFile(filename, function (_, data) {
+      res.send(data
+      + '<script src="/socket.io/socket.io.js"></script>'
+      + '<script>'
+      + '  var socket = io();'
+      + '  socket.on("file-change-event", function () {'
+      + '    window.location.reload();'
+      + '  });'
+      + '</script>'
+      );
+    });
   });
-});
 
-app.use(express.static(publicDir));
-http.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'));
-opn('http://localhost:3000');
+  app.use(express.static(publicDir));
+  http.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'));
+  opn('http://localhost:3000');
 
-var io = require('socket.io')(http);
-fs.watch(publicDir, { recursive:true }, function() {
-  io.emit('file-change-event');
-});
+  var io = require('socket.io')(http);
+  fs.watch(publicDir, { recursive:true }, function() {
+    io.emit('file-change-event');
+  });
+
+}
 
 
 
