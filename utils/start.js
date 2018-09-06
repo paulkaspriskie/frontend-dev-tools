@@ -12,7 +12,7 @@ var opn = require('opn');
 
 /**
  * Express Dev server:
- * Implements reloading dev server
+ * Implements dev server with livereload
  * serves public directory to port 3000
  */
 var app = express();
@@ -55,7 +55,7 @@ if (app.get('env') === 'development') {
  * Node-sass compiler/watcher:
  * compiles scss files to css and watches scss files for changes
  */
-function render() {
+function renderSass() {
   console.info('\x1b[36m','Rendering sass...');
   sass.render({
     file: './src/scss/app.scss',
@@ -75,8 +75,8 @@ function render() {
 }
 
 var scssWatcher = new Watcher('./src/scss/app.scss');
-scssWatcher.on('init', render);
-scssWatcher.on('update', render);
+scssWatcher.on('init', renderSass);
+scssWatcher.on('update', renderSass);
 scssWatcher.run();
 
 
@@ -106,3 +106,7 @@ appJs.on('change', (path, stats) => {
 bundleJs.on('change', (path, stats) => {
   console.info('\x1b[32m',`JS written to file: ${path}`);
 });
+
+// console.log(app.get('env'));
+// if (app.get('env') === 'development') { console.log('hi');}
+// var env = process.env.NODE_ENV || 'dev';

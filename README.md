@@ -11,7 +11,17 @@
 ```
 $ npm install
 ```
-> To run environment:
+> To run dev environment:
 ```
 $ npm start  
+```
+> To run production environment:
+```
+$ npm run build  
+```
+
+## Utilities
+> ECMA Script Linter:
+```
+$ npm run es-lint 
 ```
