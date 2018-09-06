@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-body,html {
+body,
+html {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
@@ -8,7 +9,6 @@ body,html {
 
 #app {
   padding: 1.5em 3em 0 3em;
-  & > h1 {
-    margin: 0;
-  }
+
+  & > h1 { margin: 0; }
 }

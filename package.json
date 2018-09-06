@@ -10,9 +10,10 @@
   "scripts": {
     "start": "node utils/start.js",
     "build": "NODE_ENV=production node utils/start.js",
-    "es-lint": "./node_modules/.bin/eslint src/js/app.js"
+    "es-lint": "./node_modules/.bin/eslint src/js/app.js",
+    "style-lint": "./node_modules/.bin/stylelint src/scss/app.scss --config utils/.stylelintrc.json"
   },
-  "transform": [["babelify", { "comments": false } ]],
+  "transform": [["babelify", { "comments": false }]],
   "author": "paul kaspriskie",
   "license": "ISC",
   "devDependencies": {
@@ -29,6 +30,7 @@
     "opn": "^5.3.0",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
+    "stylelint": "^9.5.0",
     "uglifyify": "^5.0.1"
   }
 }
