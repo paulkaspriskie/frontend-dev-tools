@@ -47,13 +47,44 @@ if (app.get('env') === 'development') {
     io.emit('file-change-event');
   });
 
+  // Sass file watcher: *only runs when in dev.
+  var scssWatcher = new Watcher('./src/scss/app.scss');
+  scssWatcher.on('init', renderSass);
+  scssWatcher.on('update', renderSass);
+  scssWatcher.run();
+
+  // es file watcher: *only runs when in dev.
+  const appJs = chokidar.watch('./src/js/app.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
+  const bundleJs = chokidar.watch('./public/js/bundle.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
+  appJs.on('change', (path, stats) => {
+    console.info('\x1b[36m','JS file changed, bundling js...');
+    compileJs();
+  });
+
+  bundleJs.on('change', (path, stats) => {
+    console.info('\x1b[32m',`JS written to file: ${path}`);
+  });
+
+} else if (app.get('env') === 'production') {
+
+  console.info("\x1b[37m", 'Starting build...');
+  const prodDir = chokidar.watch('./public/', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
+
+  renderSass();
+  compileJs();
+
+  prodDir.on('change', (path, stats) => {
+    console.info('\x1b[32m',`🎉  Bulid Complete! ${path}`);
+    prodDir.close();
+  });
+
 }
 
 
 
 /**
- * Node-sass compiler/watcher:
- * compiles scss files to css and watches scss files for changes
+ * Node-sass compiler:
+ * compiles scss files to css.
  */
 function renderSass() {
   console.info('\x1b[36m','Rendering sass...');
@@ -74,20 +105,12 @@ function renderSass() {
   });
 }
 
-var scssWatcher = new Watcher('./src/scss/app.scss');
-scssWatcher.on('init', renderSass);
-scssWatcher.on('update', renderSass);
-scssWatcher.run();
-
 
 
 /**
- * ECMA script compiler/watcher:
+ * ECMA script compiler:
  * Uses browserify/babelify to compile ecma script 6 to browser readable js.
  */
-const appJs = chokidar.watch('./src/js/app.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
-const bundleJs = chokidar.watch('./public/js/bundle.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
-
 function compileJs() {
   browserify({ debug: true })
     .require("./src/js/app.js", { entry: true })
@@ -97,12 +120,3 @@ function compileJs() {
     .on("error", function (err) { console.log("Error: " + err.message); })
     .pipe(fs.createWriteStream("./public/js/bundle.js"));
 }
-
-appJs.on('change', (path, stats) => {
-  console.info('\x1b[36m','JS file changed, bundling js...');
-  compileJs();
-});
-
-bundleJs.on('change', (path, stats) => {
-  console.info('\x1b[32m',`JS written to file: ${path}`);
-});
