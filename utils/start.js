@@ -106,7 +106,3 @@ appJs.on('change', (path, stats) => {
 bundleJs.on('change', (path, stats) => {
   console.info('\x1b[32m',`JS written to file: ${path}`);
 });
-
-// console.log(app.get('env'));
-// if (app.get('env') === 'development') { console.log('hi');}
-// var env = process.env.NODE_ENV || 'dev';
