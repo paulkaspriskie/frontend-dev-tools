@@ -42,10 +42,13 @@ if (app.get('env') === 'development') {
   http.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'));
   opn('http://localhost:3000');
 
+
+  // Monitors pulic dir for changes and triggers browser auto-refresh.
   var io = require('socket.io')(http);
   fs.watch(publicDir, { recursive:true }, function() {
     io.emit('file-change-event');
   });
+
 
   // Sass file watcher: *only runs when in dev.
   var scssWatcher = new Watcher('./src/scss/app.scss');
@@ -53,9 +56,11 @@ if (app.get('env') === 'development') {
   scssWatcher.on('update', renderSass);
   scssWatcher.run();
 
+
   // es file watcher: *only runs when in dev.
   const appJs = chokidar.watch('./src/js/app.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
   const bundleJs = chokidar.watch('./public/js/bundle.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
+
   appJs.on('change', (path, stats) => {
     console.info('\x1b[36m','JS file changed, bundling js...');
     compileJs();
@@ -65,17 +70,18 @@ if (app.get('env') === 'development') {
     console.info('\x1b[32m',`JS written to file: ${path}`);
   });
 
+
 } else if (app.get('env') === 'production') {
 
   console.info("\x1b[37m", 'Starting build...');
-  const prodDir = chokidar.watch('./public/', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
+  const prodDirWatcher = chokidar.watch('./public/', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
 
   renderSass();
   compileJs();
 
-  prodDir.on('change', (path, stats) => {
+  prodDirWatcher.on('change', (path, stats) => {
     console.info('\x1b[32m',`🎉  Bulid Complete! ${path}`);
-    prodDir.close();
+    prodDirWatcher.close();
   });
 
 }
@@ -113,7 +119,7 @@ function renderSass() {
  */
 function compileJs() {
   browserify({ debug: true })
-    .require("./src/js/app.js", { entry: true })
+    .require("./src/js/app.js", { comments: false, entry: true })
     .transform(babelify, { presets: ["env"] })
     .transform('uglifyify', { sourceMap: false })
     .bundle()

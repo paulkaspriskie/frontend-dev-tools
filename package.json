@@ -9,7 +9,6 @@
     "es-lint": "./node_modules/.bin/eslint -c utils/.eslintrc.json src/js/app.js",
     "style-lint": "./node_modules/.bin/stylelint src/scss/app.scss --config utils/.stylelintrc.json"
   },
-  "transform": [["babelify", { "comments": false }]],
   "author": "paul kaspriskie",
   "license": "ISC",
   "devDependencies": {
