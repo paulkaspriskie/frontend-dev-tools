@@ -1,12 +1,12 @@
-var path = require('path');
-var fs = require("graceful-fs");
-var chokidar = require('chokidar');
-var express = require('express');
-var browserify = require("browserify");
-var babelify = require("babelify");
-var sass = require('node-sass');
-var Watcher = require('node-sass-watcher');
-var opn = require('opn');
+  var path = require('path');
+  var fs = require("graceful-fs");
+  var chokidar = require('chokidar');
+  var express = require('express');
+  var browserify = require("browserify");
+  var babelify = require("babelify");
+  var sass = require('node-sass');
+  var Watcher = require('node-sass-watcher');
+  var opn = require('opn');
 
 
 
@@ -58,8 +58,17 @@ if (app.get('env') === 'development') {
 
 
   // es file watcher: *only runs when in dev.
-  const appJs = chokidar.watch('./src/js/app.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
-  const bundleJs = chokidar.watch('./public/js/bundle.js', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
+  const appJs = chokidar.watch('./src/js/app.js', {
+    ignored: /^\./,
+    persistent: true,
+    awaitWriteFinish: true
+  });
+
+  const bundleJs = chokidar.watch('./public/js/bundle.js', {
+    ignored: /^\./,
+    persistent: true,
+    awaitWriteFinish: true
+  });
 
   appJs.on('change', (path, stats) => {
     console.info('\x1b[36m','JS file changed, bundling js...');
@@ -74,7 +83,11 @@ if (app.get('env') === 'development') {
 } else if (app.get('env') === 'production') {
 
   console.info("\x1b[37m", 'Starting build...');
-  const prodDirWatcher = chokidar.watch('./public/', { ignored: /^\./, persistent: true, awaitWriteFinish: true });
+  const prodDirWatcher = chokidar.watch('./public/', {
+    ignored: /^\./,
+    persistent: true,
+    awaitWriteFinish: true
+  });
 
   renderSass();
   compileJs();
