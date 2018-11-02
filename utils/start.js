@@ -133,7 +133,7 @@ function renderSass() {
 function compileJs() {
   browserify({ debug: true })
     .require("./src/js/app.js", { comments: false, entry: true })
-    .transform(babelify, { presets: ["env"] })
+    .transform(babelify, { presets: ["env", "react"] })
     .transform('uglifyify', { sourceMap: false })
     .bundle()
     .on("error", function (err) { console.log("Error: " + err.message); })
