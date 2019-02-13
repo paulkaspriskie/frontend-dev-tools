@@ -1,5 +1,5 @@
 {
-  "name": "ECMA-Script-SDK",
+  "name": "frontend-dev-tools",
   "version": "1.0.0",
   "description": "",
   "main": "src/js/app.js",
@@ -12,10 +12,10 @@
   "author": "paul kaspriskie",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babelify": "^8.0.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babelify": "^10.0.0",
     "browserify": "^16.2.2",
     "chokidar": "^2.0.4",
     "eslint": "^5.5.0",
