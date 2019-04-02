@@ -58,7 +58,7 @@ if (app.get('env') === 'development') {
 
 
   // es file watcher: *only runs when in dev.
-  const appJs = chokidar.watch('./src/js/app.js', {
+  const appJs = chokidar.watch('./src/js/**/*.js', {
     ignored: /^\./,
     persistent: true,
     awaitWriteFinish: true
