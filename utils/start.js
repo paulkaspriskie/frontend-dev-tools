@@ -131,6 +131,9 @@ function renderSass() {
  * Uses browserify/babelify to compile ecma script 6 to browser readable js.
  */
 function compileJs() {
+
+  if (app.get('env') === 'development') {
+
   browserify({ debug: true })
     .require("./src/js/app.js", { comments: false, entry: true })
     .transform(babelify, { presets: ["@babel/preset-env", "@babel/preset-react"] })
@@ -138,4 +141,16 @@ function compileJs() {
     .bundle()
     .on("error", function (err) { console.log("Error: " + err.message); })
     .pipe(fs.createWriteStream("./public/js/bundle.js"));
+
+  } else if (app.get('env') === 'production') {
+
+    browserify({ debug: true })
+      .require("./src/js/app.js", { comments: false, entry: true })
+      .transform(babelify, { presets: ["@babel/preset-env", "@babel/preset-react"] })
+      .transform('uglifyify', { sourceMap: false })
+      .bundle()
+      .on("error", function (err) { console.log("Error: " + err.message); })
+      .pipe(fs.createWriteStream("./build/js/bundle.js"));
+
+  }
 }
