@@ -132,7 +132,7 @@ function renderSass() {
  */
 function compileJs() {
 
-  if (app.get('env') === 'development') {
+  var sassOutput = app.get('env') === 'development' ? "./public/js/bundle.js" : "./build/js/bundle.js";
 
   browserify({ debug: true })
     .require("./src/js/app.js", { comments: false, entry: true })
@@ -140,17 +140,6 @@ function compileJs() {
     .transform('uglifyify', { sourceMap: false })
     .bundle()
     .on("error", function (err) { console.log("Error: " + err.message); })
-    .pipe(fs.createWriteStream("./public/js/bundle.js"));
+    .pipe(fs.createWriteStream(sassOutput));
 
-  } else if (app.get('env') === 'production') {
-
-    browserify({ debug: true })
-      .require("./src/js/app.js", { comments: false, entry: true })
-      .transform(babelify, { presets: ["@babel/preset-env", "@babel/preset-react"] })
-      .transform('uglifyify', { sourceMap: false })
-      .bundle()
-      .on("error", function (err) { console.log("Error: " + err.message); })
-      .pipe(fs.createWriteStream("./build/js/bundle.js"));
-
-  }
 }
