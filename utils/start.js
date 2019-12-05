@@ -119,7 +119,7 @@ function compileJs() {
   var jsOutput = app.get('env') === 'development' ? "./public/js/bundle.js" : "./build/js/bundle.js";
 
   browserify({ debug: true })
-    .require("./src/js/app.js", { comments: false, entry: true })
+    .require("./src/js/index.js", { comments: false, entry: true })
     .transform(babelify, { presets: ["@babel/preset-env", "@babel/preset-react"] })
     .transform('uglifyify', { sourceMap: false })
     .bundle()
