@@ -23,7 +23,7 @@
     "graceful-chokidar": "^0.1.0",
     "node-sass": "^4.11.0",
     "node-sass-watcher": "^0.5.1",
-    "opn": "^5.4.0",
+    "open": "^7.0.0",
     "stylelint": "^9.10.1",
     "uglifyify": "^5.0.1"
   }

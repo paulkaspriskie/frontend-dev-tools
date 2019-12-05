@@ -6,7 +6,7 @@ var browserify = require("browserify");
 var babelify = require("babelify");
 var sass = require('node-sass');
 var Watcher = require('node-sass-watcher');
-var opn = require('opn');
+var open = require('open');
 
 
 
@@ -23,7 +23,7 @@ if (app.get('env') === 'development') {
 
   app.use(express.static(publicDir));
   http.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'));
-  opn('http://localhost:3000');
+  open('http://localhost:3000');
 
   // Sass file watcher: *only runs when in dev.
   var scssWatcher = new Watcher('./src/scss/app.scss');
@@ -114,8 +114,6 @@ function renderSass() {
  * ECMA script compiler:
  * Uses browserify/babelify to compile ecma script 6 to browser readable js.
  */
-
-
 function compileJs() {
 
   var jsOutput = app.get('env') === 'development' ? "./public/js/bundle.js" : "./build/js/bundle.js";
