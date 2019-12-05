@@ -21,41 +21,15 @@ var publicDir = path.join(__dirname, './../public');
 
 if (app.get('env') === 'development') {
 
-  app.get([/\/$/, /.*\.html$/], function (req, res) {
-    var filename = publicDir + req.path;
-        filename += filename.endsWith('/') ? 'index.html' : '';
-
-    fs.readFile(filename, function (_, data) {
-      res.send(data
-      + '<script src="/socket.io/socket.io.js"></script>'
-      + '<script>'
-      + '  var socket = io();'
-      + '  socket.on("file-change-event", function () {'
-      + '    window.location.reload();'
-      + '  });'
-      + '</script>'
-      );
-    });
-  });
-
   app.use(express.static(publicDir));
   http.listen(3000, () => console.info('\x1b[37m', '🌎  Listening on port 3000, open browser to http://localhost:3000/'));
   opn('http://localhost:3000');
-
-
-  // Monitors pulic dir for changes and triggers browser auto-refresh.
-  var io = require('socket.io')(http);
-  fs.watch(publicDir, { recursive:true }, function() {
-    io.emit('file-change-event');
-  });
-
 
   // Sass file watcher: *only runs when in dev.
   var scssWatcher = new Watcher('./src/scss/app.scss');
   scssWatcher.on('init', renderSass);
   scssWatcher.on('update', renderSass);
   scssWatcher.run();
-
 
   // es file watcher: *only runs when in dev.
   const appJs = chokidar.watch('./src/js/**/*.js', {
