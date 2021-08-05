@@ -14,7 +14,7 @@ function devServer() {
   const express = require('express');
   const app = express();
   const http = require('http').Server(app);
-  const dirDev = path.join(__dirname, '../public');
+  const dirDev = path.join(__dirname, '../dist');
 
   app.use(express.static(dirDev));
 
@@ -35,11 +35,11 @@ function compileSCSS() {
       file: './src/scss/app.scss',
       // outputStyle: 'compressed',
       sourceMap: false,
-      outFile: './public/css/app.css',
+      outFile: './dist/css/app.css',
     },
     function(error, result) {
       if (!error) {
-        fs.writeFile('./public/css/app.css', result.css, err => {
+        fs.writeFile('./dist/css/app.css', result.css, err => {
           !err ? console.info('\x1b[32m',`🍕 CSS written to file!`) : null;
         });
       } else {
@@ -66,7 +66,7 @@ function compileECMA() {
     .require("./src/js/index.js", { entry: true })
     .bundle()
     .on("error", function (err) { console.log("Error: " + err.message); })
-    .pipe(fs.createWriteStream("./public/js/bundle.js").on('finish', () => {
+    .pipe(fs.createWriteStream("./dist/js/bundle.js").on('finish', () => {
        console.log('\x1b[32m','🍕 Transform complete!');
      }));
 
