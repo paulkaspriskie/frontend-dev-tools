@@ -1,6 +1,7 @@
 /* Global declarations */
 const fs = require('fs');
 const path = require('path');
+const envType = process.env.NODE_ENV;
 
 
 
@@ -127,6 +128,17 @@ function taskWatcher() {
  * Calls compileECMA() and compileSCSS() when NODE_ENV === set to production.
  */
 (function() {
-  devServer();
-  taskWatcher();
+
+  if (envType !== 'production') {
+
+    devServer();
+    taskWatcher();
+
+  } else if (envType === 'production') {
+
+    compileSCSS();
+    compileECMA();
+
+  }
+
 })();

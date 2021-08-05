@@ -5,7 +5,7 @@
   "main": "src/js/index.js",
   "scripts": {
     "start": "node utils/start.js",
-    "build": "NODE_ENV=production node utils/start.js",
+    "build": "NODE_ENV=production node utils/start.js"
   },
   "author": "paul kaspriskie",
   "license": "ISC",
