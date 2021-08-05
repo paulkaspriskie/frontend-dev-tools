@@ -1,14 +1,14 @@
+/* Global declarations */
 const fs = require('fs');
 const path = require('path');
 
 
 
-(function() {
-  devServer();
-  taskWatcher();
-})();
-
-
+/**
+ * Invokes function devServer().
+ * When NODE_ENV is not set to production, devServer() is called.
+ * Serves all static files within ./dist/dev directory to port 3000.
+ */
 function devServer() {
 
   const express = require('express');
@@ -25,6 +25,13 @@ function devServer() {
 }
 
 
+
+/**
+ * Invokes function compileSCSS().
+ * When called, uses Dart-Sass to compile scss to css.
+ * Input: ./src/scss/app.scss.
+ * output: ./dist/dev || ./dist/prod depending on NODE_ENV.
+ */
 function compileSCSS() {
 
   const sass = require('sass');
@@ -50,6 +57,13 @@ function compileSCSS() {
 }
 
 
+
+/**
+ * Invokes function compileECMA().
+ * When called, uses browserify/babelify to compile ECMA script to js.
+ * Input: ./src/js/app.js.
+ * output: ./dist/dev || ./dist/prod depending on NODE_ENV.
+ */
 function compileECMA() {
 
   console.info('\x1b[36m','😻 transforming ECMA script...');
@@ -73,6 +87,13 @@ function compileECMA() {
 }
 
 
+
+/**
+ * Invokes function taskWatcher().
+ * Watches ./src folder for file changes.
+ * Gets file extension name of file.
+ * conditionally compileECMA or compileSCSS depending on changed files ext's type.
+ */
 function taskWatcher() {
 
   console.info('\x1b[37m', '👀 Dev-tools: watching for changes.')
@@ -86,7 +107,7 @@ function taskWatcher() {
 
     if (extType === 'js') {
 
-      compileECMA()
+      compileECMA();
 
     } else if (extType === 'scss') {
 
@@ -97,3 +118,15 @@ function taskWatcher() {
   });
 
 }
+
+
+
+/**
+ * Self invoking function, called on start.js files execution.
+ * Calls devServer() and taskWatcher() when NODE_ENV != set to production.
+ * Calls compileECMA() and compileSCSS() when NODE_ENV === set to production.
+ */
+(function() {
+  devServer();
+  taskWatcher();
+})();
