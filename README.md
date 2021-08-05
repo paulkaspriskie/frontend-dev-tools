@@ -14,18 +14,3 @@ $ npm install
 ```
 $ npm start  
 ```
-> To run production build:
-```
-$ npm run build  
-```
-
-
-## Utilities
-> ECMA Script Linter:
-```
-$ npm run es-lint
-```
-> Style Linter:
-```
-$ npm run style-lint
-```
