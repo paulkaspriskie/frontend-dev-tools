@@ -36,22 +36,34 @@ function devServer() {
 function compileSCSS() {
 
   const sass = require('sass');
+  const postcss = require('postcss');
+  const autoprefixer = require('autoprefixer');
 
   console.info('\x1b[36m','😻 Rendering sass...');
 
   sass.render({
       file: './src/scss/app.scss',
-      outputStyle: envType !== 'production' ? "expanded" :'compressed',
+      outputStyle: envType !== 'production' ? "expanded" : 'compressed',
       sourceMap: false,
       outFile: './dist/css/app.css',
     },
     function(error, result) {
       if (!error) {
-        fs.writeFile('./dist/css/app.css', result.css, err => {
-          !err ? console.info('\x1b[32m',`🍕 CSS written to file!`) : null;
-        });
+
+        postcss([ autoprefixer ])
+          .process(result.css, { from: undefined, to: 'dist/css/app.css' })
+          .then(result => {
+
+            fs.writeFile('./dist/css/app.css', result.css, err => {
+              !err ? console.info('\x1b[32m',`🍕 CSS written to file!`) : null;
+            });
+
+          });
+
       } else {
+
         console.error(error);
+
       }
     });
 
