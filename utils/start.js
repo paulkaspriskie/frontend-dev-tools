@@ -20,7 +20,7 @@ function devServer() {
   app.use(express.static(dirDev));
 
   http.listen(3000, () => {
-    console.info('\x1b[37m', '🌎 Listening on port 3000, open browser to http://localhost:3000/');
+    console.info('\x1b[37m', '🌎 Dev-Server: Listening on port 3000, open browser to http://localhost:3000/');
   });
 
 }
@@ -41,7 +41,7 @@ function compileSCSS() {
 
   sass.render({
       file: './src/scss/app.scss',
-      // outputStyle: 'compressed',
+      outputStyle: envType !== 'production' ? "expanded" :'compressed',
       sourceMap: false,
       outFile: './dist/css/app.css',
     },
@@ -76,7 +76,7 @@ function compileECMA() {
     .transform(babelify, {
        presets: ["@babel/preset-env"],
        comments: false,
-       minified: false
+       minified: envType !== 'production' ? false : true
      })
     .require("./src/js/index.js", { entry: true })
     .bundle()
