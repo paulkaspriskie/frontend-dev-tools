@@ -37,7 +37,7 @@ function compileSCSS() {
 
   const sass = require('sass');
   const postcss = require('postcss');
-  const autoprefixer = require('autoprefixer');
+  const postcssPresetEnv = require('postcss-preset-env');
 
   console.info('\x1b[36m','😻 Rendering sass...');
 
@@ -50,7 +50,7 @@ function compileSCSS() {
     function(error, result) {
       if (!error) {
 
-        postcss([ autoprefixer ])
+        postcss([ postcssPresetEnv ])
           .process(result.css, { from: undefined, to: 'dist/css/app.css' })
           .then(result => {
 

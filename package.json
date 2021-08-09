@@ -8,6 +8,7 @@
     "build": "NODE_ENV=production node utils/start.js"
   },
   "browserslist": [
+    "> 1%",
     "last 3 versions"
   ],
   "author": "paul kaspriskie",
@@ -15,12 +16,12 @@
   "devDependencies": {
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.9",
-    "autoprefixer": "^10.3.1",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "chokidar": "^3.5.2",
     "express": "^4.17.1",
     "postcss": "^8.3.6",
+    "postcss-preset-env": "^6.7.0",
     "sass": "^1.37.5"
   }
 }
