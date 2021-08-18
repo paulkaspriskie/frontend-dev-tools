@@ -19,6 +19,15 @@ function devServer() {
 
   app.use(express.static(dirDev));
 
+  // redirects all of your server requests to ./dist/index.html
+  app.get('/*', function(req, res) {
+    res.sendFile(dirDev + '/index.html', function(err) {
+      if (err) {
+        res.status(500).send(err)
+      }
+    });
+  });
+
   http.listen(3000, () => {
     console.info('\x1b[37m', '🌎 Dev-Server: Listening on port 3000, open browser to http://localhost:3000/');
   });
