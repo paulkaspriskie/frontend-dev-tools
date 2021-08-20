@@ -1,7 +1,6 @@
 @use "utils/mixins" as m;
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-
 body,
 html {
   font-family: 'Open Sans', sans-serif;
@@ -14,6 +13,7 @@ html {
 
   & > h1 {
     @include m.transition(all, 0.2s, ease-in-out);
+    @include m.vert-center;
     margin: 0;
   }
 }
