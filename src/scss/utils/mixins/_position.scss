@@ -1,5 +1,11 @@
+@mixin box($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+
 @mixin vert-center {
-   position: relative;
-   top: 50%;
-   transform: translateY(-50%);
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
