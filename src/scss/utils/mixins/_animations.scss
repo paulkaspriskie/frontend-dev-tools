@@ -1,0 +1,6 @@
+
+
+// ex. transition(all, .2s, ease-in-out)
+@mixin transition ($values...) {
+  transition: $values;
+}
