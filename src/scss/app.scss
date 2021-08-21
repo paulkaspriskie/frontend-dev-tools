@@ -1,20 +1,10 @@
-@use "core/base";
+@use "core";
 @use "utils/mixins" as m;
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-body,
-html {
-  font-family: 'Open Sans', sans-serif;
-  margin: 0;
-  padding: 0;
-}
 
 #app {
   padding: 1.5em 3em 0 3em;
 
   & > h1 {
-    @include m.transition(all, 0.2s, ease-in-out);
-    @include m.vert-center;
     margin: 0;
   }
 }
