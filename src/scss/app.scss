@@ -3,7 +3,7 @@
 
 #app {
   @include m.size(100%);
-  @include m.flex-config($justify-content: center, $align-items: center);
+  @include m.flex-config($content: center, $dir: column, $items: center);
 
   & > h1 {
     margin: 0;

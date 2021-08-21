@@ -3,22 +3,22 @@
  * Adds only display: flex; if no arguments are passed.
  * Adds properties if true.
  */
-@mixin flex-config($justify-content: false, $flex: false, $flex-direction: false, $align-items: false) {
+@mixin flex-config($content: false, $flex: false, $dir: false, $items: false) {
   display: flex;
 
-  @if $justify-content != false {
-    justify-content: $justify-content;
+  @if $content != false {
+    justify-content: $content;
   }
 
   @if $flex != false {
     flex: $flex;
   }
 
-  @if $flex-direction != false {
-    flex-direction: $flex-direction;
+  @if $dir != false {
+    flex-direction: $dir;
   }
 
-  @if $align-items != false {
-    align-items: $align-items;
+  @if $items != false {
+    align-items: $items;
   }
 }
