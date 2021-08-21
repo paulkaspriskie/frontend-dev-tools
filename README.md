@@ -24,7 +24,7 @@ $ npm run build
 ```
     scss/
     |
-    | - base/
+    | - core/
     |       | - reset.scss
     |       | - typography.scss
     |
