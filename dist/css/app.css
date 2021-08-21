@@ -63,9 +63,47 @@ select {
   --text-base-size: 1.6rem;
 }
 
+/**
+ * @mixin flex-config
+ * Adds only display: flex; if no arguments are passed.
+ * Adds properties if true.
+ */
+/**
+ * @mixin bg-image
+ * Adds only image url if no arguments are passed.
+ * Adds properties if true.
+ */
+/**
+ * @ mixin size
+ * Sets width and height of an element.
+ * If no hight is declared it assumes $width's value.
+ */
+/**
+ * @ mixin vert-center
+ * Vertically centers a child element within a parent.
+ * No need to include browser prefixes, postcss adds them on compile.
+ */
 #app {
-  padding: 1.5em 3em 0 3em;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 #app > h1 {
   margin: 0;
+}
+#app > div {
+  width: 800px;
+  height: 600px;
+  background-image: url("https://placekitten.com/600/400");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }

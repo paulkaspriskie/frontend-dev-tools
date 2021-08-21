@@ -1,5 +1,20 @@
-@mixin cover-background {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+/**
+ * @mixin bg-image
+ * Adds only image url if no arguments are passed.
+ * Adds properties if true.
+ */
+@mixin bg-image($img-url, $repeat: false, $cover: false, $position: false) {
+  background-image: url($img-url);
+
+  @if $repeat != false {
+    background-repeat: $repeat;
+  }
+
+  @if $cover != false {
+    background-size: $cover;
+  }
+
+  @if $position != false {
+    background-position: $position;
+  }
 }

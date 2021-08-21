@@ -2,9 +2,15 @@
 @use "utils/mixins" as m;
 
 #app {
-  padding: 1.5em 3em 0 3em;
+  @include m.size(100%);
+  @include m.flex-config($justify-content: center, $align-items: center);
 
   & > h1 {
     margin: 0;
+  }
+
+  & > div {
+    @include m.size(800px, 600px);
+    @include m.bg-image("https://placekitten.com/600/400", $repeat: no-repeat, $cover: cover, $position: center);
   }
 }

@@ -1,7 +1,7 @@
 /**
  * @mixin flex-config
  * Adds only display: flex; if no arguments are passed.
- * Adds properties if they are true.
+ * Adds properties if true.
  */
 @mixin flex-config($justify-content: false, $flex: false, $flex-direction: false, $align-items: false) {
   display: flex;
