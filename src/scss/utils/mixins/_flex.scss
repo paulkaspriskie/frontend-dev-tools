@@ -1,5 +1,24 @@
-@mixin flex-center {
+/**
+ * @mixin flex-config
+ * Adds only display: flex; if no arguments are passed.
+ * Adds properties if they are true.
+ */
+@mixin flex-config($justify-content: false, $flex: false, $flex-direction: false, $align-items: false) {
   display: flex;
-  align-items: center;
-  justify-content: center;
+
+  @if $justify-content != false {
+    justify-content: $justify-content;
+  }
+
+  @if $flex != false {
+    flex: $flex;
+  }
+
+  @if $flex-direction != false {
+    flex-direction: $flex-direction;
+  }
+
+  @if $align-items != false {
+    align-items: $align-items;
+  }
 }

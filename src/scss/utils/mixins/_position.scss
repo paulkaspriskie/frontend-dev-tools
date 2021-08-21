@@ -1,9 +1,19 @@
-@mixin box($width, $height: $width) {
+/**
+ * @ mixin size
+ * Sets width and height of an element.
+ * If no hight is declared it assumes $width's value.
+ */
+@mixin size($width, $height: $width) {
   width: $width;
   height: $height;
 }
 
 
+/**
+ * @ mixin vert-center
+ * Vertically centers a child element within a parent.
+ * No need to include browser prefixes, postcss adds them on compile.
+ */
 @mixin vert-center {
   position: relative;
   top: 50%;
