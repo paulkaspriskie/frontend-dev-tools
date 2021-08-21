@@ -1,12 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
-html {
+*,
+*::before,
+*::after {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-}
-
-body {
-  font-family: "Open Sans", sans-serif;
-  font-family: var(--font-primary);
 }
 
 html,
@@ -18,12 +15,52 @@ body {
   min-height: 100%;
 }
 
+html {
+  cursor: default;
+  word-break: break-all;
+}
+html[focus-within] {
+  scroll-behavior: smooth;
+}
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-primary);
+}
+
+a:not([class]) {
+  -webkit-text-decoration-skip: ink;
+          text-decoration-skip-ink: auto;
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+nav ol, nav ul {
+  padding: 0;
+  list-style: none;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
 :root {
   --font-primary: "Open Sans", sans-serif;
   --font-secondary: serif;
   /* set base values */
-  --text-base-size: 1em;
-  --text-scale-ratio: 1.2;
+  --text-base-size: 1.6rem;
 }
 
 #app {

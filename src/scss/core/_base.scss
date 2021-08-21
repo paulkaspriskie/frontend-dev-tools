@@ -1,9 +1,7 @@
-html {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-}
-
-body {
-  font-family: var(--font-primary);
 }
 
 html,
@@ -13,4 +11,41 @@ body {
   width: 100%;
   height: 100%;
   min-height: 100%;
+}
+
+html {
+  cursor: default;
+  word-break: break-all;
+
+  &:focus-within {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  font-family: var(--font-primary);
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+nav ol, nav ul {
+  padding: 0;
+  list-style: none;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
