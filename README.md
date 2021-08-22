@@ -4,6 +4,8 @@
  - Express dev server, open browser to http://localhost:3000/
  - ECMA script compiler: Babel-Core/Browserify/Babelify (supports es2015+)
  - Sass compiler (Dart-sass)
+ - Autoprefixer (Postcss)
+
 
 ## Setup
 > Install node packages:
@@ -18,6 +20,7 @@ $ npm start
 ```
 $ npm run build  
 ```
+
 
 ## Frontend Architecture Overview
 ### Sass (scss) Architecture: File Structure Theme
@@ -44,6 +47,7 @@ $ npm run build
     |
     | - app.scss (entry point scss file)
 ```
+
 
 ### Sass (scss) Formatting Standards
 #### Basic Formatting Rules:
