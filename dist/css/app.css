@@ -74,12 +74,17 @@ select {
  * Adds properties if true.
  */
 /**
- * @ mixin size
+ * @mixin size
  * Sets width and height of an element.
  * If no hight is declared it assumes $width's value.
  */
 /**
- * @ mixin vert-center
+ * @mixin position
+ * @param {String} $position - Either `relative`, `absolute` or `fixed`
+ * @param {Length} $top, $right, $bottom, $left.
+ */
+/**
+ * @mixin vert-center
  * Vertically centers a child element within a parent.
  * No need to include browser prefixes, postcss adds them on compile.
  */
