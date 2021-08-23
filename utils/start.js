@@ -86,27 +86,41 @@ function compileSCSS() {
  * Input: ./src/js/app.js.
  * output: ./dist/dev || ./dist/prod depending on NODE_ENV.
  */
-function compileECMA() {
+ function compileECMA() {
 
-  console.info('\x1b[36m','😻 transforming ECMA script...');
+   console.info('\x1b[36m','😻 transforming ECMA script...');
 
-  const browserify = require("browserify");
-  const babelify = require("babelify");
+   const browserify = require("browserify");
+   const babelify = require("babelify");
+   const envify = require('envify/custom');
 
-  browserify({ debug: false })
-    .transform(babelify, {
-       presets: ["@babel/preset-env"],
-       comments: false,
-       minified: envType !== 'production' ? false : true
-     })
-    .require("./src/js/index.js", { entry: true })
-    .bundle()
-    .on("error", function (err) { console.log("Error: " + err.message); })
-    .pipe(fs.createWriteStream("./dist/js/bundle.js").on('finish', () => {
-       console.log('\x1b[32m','🍕 Transform complete!');
-     }));
+   let b = browserify({ debug: false });
 
-}
+       b.require("./src/js/index.js", { entry: true });
+
+       b.transform(babelify, {
+         presets: ["@babel/preset-env"],
+         comments: false,
+         minified: envType !== 'production' ? false : true
+       });
+
+       b.transform(envify({
+         NODE_ENV: envType !== 'production' ? 'development' : 'production'
+       }));
+
+       envType == 'production' ? b.transform('uglifyify', { global: true  }) : null;
+
+       b.bundle().on("error", function (err) {
+
+           console.log("Error: " + err.message);
+
+       }).pipe(fs.createWriteStream("./dist/js/bundle.js").on('finish', () => {
+
+           console.log('\x1b[32m','🍕 Transform complete!');
+
+       }));
+
+ }
 
 
 
