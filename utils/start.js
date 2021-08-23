@@ -19,7 +19,7 @@ function devServer() {
 
   app.use(express.static(dirDev));
 
-  // redirects all of your server requests to ./dist/index.html
+  // Route catch-all: redirects all server requests to ./dist/index.html
   app.get('/*', function(req, res) {
     res.sendFile(dirDev + '/index.html', function(err) {
       if (err) {
@@ -96,20 +96,28 @@ function compileSCSS() {
 
    let b = browserify({ debug: false });
 
+       // Browserify entrypoint and options.
        b.require("./src/js/index.js", { entry: true });
 
+       // Babelify config and options.
+       // If NODE_ENV is set prodution minified = true otherwise sets to false.
        b.transform(babelify, {
          presets: ["@babel/preset-env"],
          comments: false,
          minified: envType !== 'production' ? false : true
        });
 
+       // Envify transform and options.
+       // If NODE_ENV is set prodution NODE_ENV = production otherwise sets to development.
        b.transform(envify({
          NODE_ENV: envType !== 'production' ? 'development' : 'production'
        }));
 
+       // Uglifyify transform and options.
+       // If NODE_ENV is set to prodution uglifyify transform is invoked otherwise it's skipped.
        envType == 'production' ? b.transform('uglifyify', { global: true  }) : null;
 
+       // If no error(s) occur bundle is piped and written to ./dist/js/bundle.js.
        b.bundle().on("error", function (err) {
 
            console.log("Error: " + err.message);
